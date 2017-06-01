@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="<%=I18n.locale %>">
+<head>
+<title><%=@title %></title>
+<meta charset="utf-8" />
+<meta name="robots" content="<%=@meta_robot %>" />
+<meta name="application-name" content="<%=@meta_application_name %>" />
+<meta name="keywords" content="<%=@meta_keyword %>" />
+<meta name="description" content="<%=@meta_description %>" />
+<meta name="author" content="Sleeping-Lion" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="shortcut icon" href="<%=asset_path('favicon.ico') %>" />
+<%= stylesheet_link_tag "//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css", :media => "all" %>
+<%= stylesheet_link_tag "application", media: "all", "data-turbolinks-track" => true %>
+<%= csrf_meta_tags %>
+<!--[if IE]>
+<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+<![endif]-->
+</head>
+<body>
+<%= render :partial => 'layouts/header' %>
+<div id="mom">
+	<div id="main" class="container">
+		<a id="prevslide" class="load-item"></a>
+		<a id="nextslide" class="load-item"></a>
+		<div class="wrapper">
+		<% unless controller.controller_name=='home' %>
+			<div class="page-header">
+				<h1><%=@controller_name %></h1>
+				<p class="breadcrumb"><%=link_to_home %> <% if @controller_category_name %> &gt; <span><%=@controller_category_name %></span><% end %> &gt; <strong><%=@controller_name %></strong></p>
+			</div>
+			<% end %>
+			<% unless	@menu_setting.nil? %>
+			<% if @ad && @menu_setting.ad_position_id==2 %>
+			<%= render :partial => 'layouts/ad' %>
+			<% end %>
+			<% end %>
+			<section class="sub_main">
+				<%=yield %>
+			</section>
+			<% unless	@menu_setting.nil? %>
+			<% if @ad && @menu_setting.ad_position_id==3 %>
+			<%= render :partial => 'layouts/ad' %>
+			<% end %>
+			<% end %>
+		</div>
+	</div>
+</div>
+<%= render :partial => 'layouts/footer' %>
+<div class="slboard_overlay" id="overlay"></div>
+<%= javascript_include_tag "//cdn.jquerytools.org/1.2.7/full/jquery.tools.min.js" %>
+<%= javascript_include_tag "//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js" %>
+<%= javascript_include_tag @script, "data-turbolinks-track" => true %>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<% if notice %>
+<%= render :partial => 'layouts/notice',:locals=>{:notice=>notice} %>
+<% end %>
+<section id="product_show">
+	<section>
+		<figure>
+			<%=image_tag @product.photo.large_thumb %>
+			<figcaption><%=@product.title %></figcaption>
+		</figure>
+		<article class="text">
+			<%=simple_format @product.product_content.content %>
+		</article>
+	</section>
+	<div id="sl_content_bottom_menu">
+		<%= link_to '목록으로',products_path %>
+		<% if user_signed_in? %>
+		<% if current_user.admin? %>
+		&nbsp; | &nbsp; <%= link_to '수정', edit_product_path(@product) %> &nbsp; | &nbsp; <%= link_to '삭제', @product, method: :delete, data: { confirm: '정말로 삭제합니까?' } %>
+		<% end %>
+		<% end %>
+	</div>
+</section>
+
+

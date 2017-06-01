@@ -1,0 +1,42 @@
+<section id="product_index">
+	<ol class="nav nav-pills">
+		<% unless @product_categories.empty? %>
+		<% @product_categories.each do |product_category| %>
+		<li <% if(@product_category_id==product_category.id) %>class="active"<% end %>><%= link_to "#{product_category.title.truncate(20)}(#{product_category.products_count})",products_path(:product_category_id=>product_category.id) %></li>
+		<% end %>
+		<% else %>	
+		<li><%=t(:no_data)%></li>
+		<% end %>
+	</ol>	
+	<% unless @products.empty? %>	
+	<% @products.each do |product| %>
+ 	<article class="product">
+ 		<%=link_to product_path(product) do %>
+ 		<figure>
+ 			<%=image_tag product.photo.medium_thumb %>
+ 			<figcaption><%=product.title %></figcaption>
+ 		</figure>
+ 		<% end %>
+ 		<dl>
+  		<dt>제목</dt>
+  		<dd><%= product.title %></dd>
+  		<dt>가격</dt>
+  		<dd><%= product.price %></dd>
+  		<dt>설명</dt>
+  		<dd><%=simple_format product.description %></dd>
+  	</dl>
+  </article>
+	<% end %>
+	<% else %>
+ 	<article class="product">
+ 		<p>상품이 없습니다.</p>
+ 	</article>
+	<% end %>
+	<div id="sl_bottom_menu">
+	<% if can? :create, Product %>
+		<%= link_to '글쓰기', new_product_path %>
+	<% end %>
+	<%= paginate @products %>
+	</div>
+</section>
+

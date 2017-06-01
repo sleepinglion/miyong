@@ -1,0 +1,27 @@
+<%= form_for ['intro',@history],:html=>{:class=>'slboard_form'} do |f| %>
+	<% if @history.errors.any? %>
+	<div id="error_explanation">
+		<h2><%= pluralize(@history.errors.count, "error") %> prohibited this notice from being saved:</h2>
+		<ul>
+			<% @history.errors.full_messages.each do |msg| %>
+			<li><%= msg %></li>
+			<% end %>
+		</ul>
+	</div>
+	<% end %>
+	<div class="field">
+		<%= f.label :year %><br />
+		<%= select_year(Date.today,{:start_year => 2013, :end_year => 2000}, {:name => 'history[year]'}) %>
+	</div>	
+	<div class="field">
+		<%= f.label :title %><br />
+		<%= f.text_field :title,:required=>"required" %>
+	</div>
+	<div class="field">
+		<%= f.label :content %><br />
+		<%= f.text_area :content,:id=>"sl_content",:required=>"required"  %>
+	</div>
+	<div class="actions">
+		<%= f.submit :class=>"btn btn-primary" %>
+	</div>
+<% end %>
